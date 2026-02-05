@@ -537,9 +537,13 @@ section {
 }
 
 .lesson-icon {
-    font-size: 3rem;
     color: var(--deep-teal);
     margin-bottom: var(--spacing-md);
+}
+
+.lesson-icon svg {
+    width: 48px;
+    height: 48px;
 }
 
 .lesson-card h3 {
@@ -915,9 +919,14 @@ section {
 .footer-decoration {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: var(--spacing-md);
-    font-size: 1.5rem;
     color: var(--gold-accent);
+}
+
+.footer-decoration svg {
+    width: 24px;
+    height: 24px;
 }
 
 /* Responsive Design */
