@@ -4,10 +4,44 @@ document.addEventListener('DOMContentLoaded', function() {
     var yearEl = document.getElementById('currentYear');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+    // Mobile menu toggle
+    var menuToggle = document.getElementById('menuToggle');
+    var mainNav = document.getElementById('mainNav');
+    var navOverlay = document.getElementById('navOverlay');
+
+    function closeMenu() {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function openMenu() {
+        menuToggle.classList.add('active');
+        mainNav.classList.add('active');
+        navOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            if (mainNav.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+    }
+
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeMenu);
+    }
+
     // Smooth scroll with offset for header
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
+            closeMenu(); // Close mobile menu when nav link clicked
             var target = document.querySelector(this.getAttribute('href'));
             if (target) {
                 var headerOffset = 80;
