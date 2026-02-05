@@ -613,13 +613,13 @@ section {
 
 .lightbox-overlay.active {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 }
 
 .lightbox-overlay img {
     display: block;
-    margin: 0 auto;
+    margin: auto;
     flex-shrink: 0;
 }
 
