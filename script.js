@@ -153,7 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Keyboard navigation for carousel
     document.addEventListener('keydown', (e) => {
-        if (document.getElementById('lightbox').classList.contains('active')) return;
         if (e.key === 'ArrowRight') nextSlide();
         if (e.key === 'ArrowLeft') prevSlide();
     });
@@ -178,68 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (touchEndX > touchStartX + swipeThreshold) prevSlide();
     }
 
-    // Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
-    const lightboxClose = document.querySelector('.lightbox-close');
-    const lightboxPrev = document.querySelector('.lightbox-btn.prev');
-    const lightboxNext = document.querySelector('.lightbox-btn.next');
-
-    // Open lightbox on image click
-    slides.forEach((slide, index) => {
-        const img = slide.querySelector('img');
-        img.addEventListener('click', () => {
-            currentSlide = index;
-            openLightbox();
-        });
-    });
-
-    function openLightbox() {
-        const slide = slides[currentSlide];
-        const img = slide.querySelector('img');
-        const caption = slide.querySelector('.carousel-caption');
-        
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        lightboxCaption.innerHTML = caption.innerHTML;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function lightboxNextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        updateSlide();
-        openLightbox();
-    }
-
-    function lightboxPrevSlide() {
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        updateSlide();
-        openLightbox();
-    }
-
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightboxNext.addEventListener('click', lightboxNextSlide);
-    lightboxPrev.addEventListener('click', lightboxPrevSlide);
-
-    // Close lightbox on background click
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-    });
-
-    // Keyboard navigation for lightbox
-    document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') lightboxNextSlide();
-        if (e.key === 'ArrowLeft') lightboxPrevSlide();
-    });
 });
 
 // Add parallax effect to hero background
