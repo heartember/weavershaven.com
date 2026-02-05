@@ -135,6 +135,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Lightbox - click image to see full size
+    var overlay = document.getElementById('lightboxOverlay');
+    var overlayImg = document.getElementById('lightboxOverlayImg');
+    var overlayCaption = document.getElementById('lightboxOverlayCaption');
+    var overlayClose = document.querySelector('.lightbox-overlay-close');
+
+    if (overlay && overlayImg) {
+        // Click carousel image to open
+        for (var k = 0; k < slides.length; k++) {
+            (function(slide) {
+                var img = slide.querySelector('img');
+                if (img) {
+                    img.addEventListener('click', function() {
+                        var caption = slide.querySelector('.carousel-caption');
+                        overlayImg.src = img.src;
+                        overlayImg.alt = img.alt;
+                        overlayCaption.innerHTML = caption ? caption.innerHTML : '';
+                        overlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+            })(slides[k]);
+        }
+
+        // Close on X button
+        if (overlayClose) {
+            overlayClose.addEventListener('click', function() {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+
+        // Close on background click
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
     // Parallax effect on hero
     window.addEventListener('scroll', function() {
         var scrolled = window.pageYOffset;
