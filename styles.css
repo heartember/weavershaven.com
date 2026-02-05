@@ -621,16 +621,18 @@ section {
     display: block;
     margin: auto;
     flex-shrink: 0;
+    max-width: 90vw;
+    max-height: 85vh;
 }
 
 .lightbox-overlay-close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
+    position: fixed;
+    top: 2vh;
+    right: 2vw;
     background: none;
     border: none;
     color: var(--cream);
-    font-size: 3rem;
+    font-size: clamp(24px, 3vw, 48px);
     cursor: pointer;
     transition: var(--transition);
     z-index: 1001;
