@@ -89,9 +89,9 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-// Observe lesson cards and gallery items
+// Observe lesson cards
 document.addEventListener('DOMContentLoaded', function() {
-    const animatedElements = document.querySelectorAll('.lesson-card, .gallery-item');
+    const animatedElements = document.querySelectorAll('.lesson-card');
     
     animatedElements.forEach((el, index) => {
         el.style.opacity = '0';
@@ -99,6 +99,141 @@ document.addEventListener('DOMContentLoaded', function() {
         el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
         observer.observe(el);
     });
+});
+
+// Gallery Carousel
+const slides = document.querySelectorAll('.carousel-slide');
+const dotsContainer = document.querySelector('.carousel-dots');
+const prevBtn = document.querySelector('.carousel-btn.prev');
+const nextBtn = document.querySelector('.carousel-btn.next');
+let currentSlide = 0;
+
+// Create dots
+slides.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.classList.add('carousel-dot');
+    if (index === 0) dot.classList.add('active');
+    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+});
+
+const dots = document.querySelectorAll('.carousel-dot');
+
+function updateSlide() {
+    slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+        dots[index].classList.remove('active');
+    });
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlide();
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlide();
+}
+
+function goToSlide(index) {
+    currentSlide = index;
+    updateSlide();
+}
+
+prevBtn.addEventListener('click', prevSlide);
+nextBtn.addEventListener('click', nextSlide);
+
+// Keyboard navigation for carousel
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+});
+
+// Touch/swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+const carouselContainer = document.querySelector('.carousel-container');
+
+carouselContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+carouselContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold) nextSlide();
+    if (touchEndX > touchStartX + swipeThreshold) prevSlide();
+}
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const lightboxClose = document.querySelector('.lightbox-close');
+const lightboxPrev = document.querySelector('.lightbox-btn.prev');
+const lightboxNext = document.querySelector('.lightbox-btn.next');
+
+// Open lightbox on image click
+slides.forEach((slide, index) => {
+    const img = slide.querySelector('img');
+    img.addEventListener('click', () => {
+        currentSlide = index;
+        openLightbox();
+    });
+});
+
+function openLightbox() {
+    const slide = slides[currentSlide];
+    const img = slide.querySelector('img');
+    const caption = slide.querySelector('.carousel-caption');
+    
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.innerHTML = caption.innerHTML;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function lightboxNextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlide();
+    openLightbox();
+}
+
+function lightboxPrevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlide();
+    openLightbox();
+}
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxNext.addEventListener('click', lightboxNextSlide);
+lightboxPrev.addEventListener('click', lightboxPrevSlide);
+
+// Close lightbox on background click
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+
+// Keyboard navigation for lightbox
+document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lightboxNextSlide();
+    if (e.key === 'ArrowLeft') lightboxPrevSlide();
 });
 
 // Add parallax effect to hero background
