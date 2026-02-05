@@ -618,9 +618,6 @@ section {
 }
 
 .lightbox-overlay img {
-    max-width: 92%;
-    max-height: 90%;
-    object-fit: contain;
     display: block;
     margin: 0 auto;
     flex-shrink: 0;
