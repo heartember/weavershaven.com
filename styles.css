@@ -503,18 +503,21 @@ section {
     flex: 1;
     position: relative;
     overflow: hidden;
-    background: var(--sand);
+    background: #f0ece4;
     border: 3px solid var(--gold-accent);
     box-shadow: 0 15px 40px rgba(58, 56, 56, 0.15);
+    height: 600px;
 }
 
 .carousel-slide {
     display: none;
     animation: fadeIn 0.5s ease;
+    height: 100%;
 }
 
 .carousel-slide.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes fadeIn {
@@ -524,7 +527,8 @@ section {
 
 .carousel-slide img {
     width: 100%;
-    height: 600px;
+    flex: 1;
+    min-height: 0;
     object-fit: contain;
     background: #f0ece4;
     display: block;
@@ -687,8 +691,8 @@ section {
         display: none;
     }
 
-    .carousel-slide img {
-        height: 350px;
+    .carousel-container {
+        height: 400px;
     }
     
     .carousel-caption h3 {
