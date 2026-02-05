@@ -618,28 +618,10 @@ section {
 
 .lightbox-overlay img {
     max-width: 92vw;
-    max-height: 85vh;
+    max-height: 90vh;
     object-fit: contain;
     display: block;
     margin: 0 auto;
-}
-
-.lightbox-overlay-caption {
-    text-align: center;
-    color: var(--cream);
-    padding: 1rem 0 0;
-    font-size: 1.1rem;
-}
-
-.lightbox-overlay-caption h3 {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    margin-bottom: 0.25rem;
-}
-
-.lightbox-overlay-caption p {
-    color: var(--sand);
-    font-style: italic;
 }
 
 .lightbox-overlay-close {

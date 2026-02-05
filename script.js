@@ -148,10 +148,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 var img = slide.querySelector('img');
                 if (img) {
                     img.addEventListener('click', function() {
-                        var caption = slide.querySelector('.carousel-caption');
                         overlayImg.src = img.src;
                         overlayImg.alt = img.alt;
-                        overlayCaption.innerHTML = caption ? caption.innerHTML : '';
                         overlay.classList.add('active');
                         document.body.style.overflow = 'hidden';
                     });
