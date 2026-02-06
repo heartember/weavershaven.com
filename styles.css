@@ -586,7 +586,6 @@ section {
     flex: 1;
     position: relative;
     overflow: hidden;
-    background: #f0ece4;
     height: 600px;
 }
 
@@ -611,7 +610,6 @@ section {
     flex: 1;
     min-height: 0;
     object-fit: contain;
-    background: #f0ece4;
     display: block;
     cursor: pointer;
 }
