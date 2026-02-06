@@ -52,27 +52,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form submission handler
-    var subscribeForm = document.getElementById('subscribeForm');
+    // Contact form submission handler
+    var contactForm = document.getElementById('contactForm');
     var formMessage = document.getElementById('formMessage');
 
-    if (subscribeForm) {
-        subscribeForm.addEventListener('submit', function(e) {
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             var nameVal = document.getElementById('name').value;
-            var submitButton = subscribeForm.querySelector('.submit-button');
+            var submitButton = contactForm.querySelector('.submit-button');
             var originalButtonText = submitButton.textContent;
-            submitButton.textContent = 'Subscribing...';
+            submitButton.textContent = 'Sending...';
             submitButton.disabled = true;
 
-            setTimeout(function() {
-                formMessage.textContent = 'Thank you, ' + nameVal + '! You\'ve been added to the mailing list.';
-                formMessage.className = 'form-message success';
-                subscribeForm.reset();
+            var formData = new FormData(contactForm);
+
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    formMessage.textContent = 'Thank you, ' + nameVal + '! Your message has been sent.';
+                    formMessage.className = 'form-message success';
+                    contactForm.reset();
+                } else {
+                    formMessage.textContent = 'Oops! Something went wrong. Please try again.';
+                    formMessage.className = 'form-message error';
+                }
                 submitButton.textContent = originalButtonText;
                 submitButton.disabled = false;
-                setTimeout(function() { formMessage.style.display = 'none'; }, 5000);
-            }, 1500);
+                setTimeout(function() { formMessage.className = 'form-message'; }, 5000);
+            })
+            .catch(function(error) {
+                formMessage.textContent = 'Oops! Something went wrong. Please try again.';
+                formMessage.className = 'form-message error';
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+                setTimeout(function() { formMessage.className = 'form-message'; }, 5000);
+            });
         });
     }
 
