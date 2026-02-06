@@ -587,8 +587,6 @@ section {
     position: relative;
     overflow: hidden;
     background: #f0ece4;
-    border: 3px solid var(--gold-accent);
-    box-shadow: 0 15px 40px rgba(58, 56, 56, 0.15);
     height: 600px;
 }
 
